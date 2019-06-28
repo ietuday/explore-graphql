@@ -139,3 +139,11 @@ It uses a type system to describe data.
 With GraphQL, the user is able to make a single call to fetch the required information rather than to construct several REST requests to fetch the same.
 
 ## Screenshots
+
+### WHAT IS GRAPHQL
+
+![What is graphql?](./Screenshots/graphql-1.png?raw=true "Optional Title")
+
+### REST VS GRAPHQL
+
+![rest vs graphql](./Screenshots/graphql-vs-rest.png?raw=true "Optional Title")
