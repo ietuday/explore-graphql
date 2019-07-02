@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const couponSchema = new mongoose.Schema(
   {
@@ -28,6 +28,6 @@ const couponSchema = new mongoose.Schema(
     }
   },
   { timestamps: true }
-);
+)
 
-export const Coupon = mongoose.model('coupon', couponSchema);
+export const Coupon = mongoose.model('coupon', couponSchema)

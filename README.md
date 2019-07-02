@@ -1,149 +1,73 @@
-# GraphQL.js
+# Intro to GraphQL
+> Scott Moss & Frontend Masters
 
-The JavaScript reference implementation for GraphQL, a query language for APIs created by Facebook.
+## Resources
+* [Slides](https://slides.com/scotups/intro-to-graphql)
+* [Nodejs](https://nodejs.org/en/)
+* [MongoDB](https://www.mongodb.com/)
+* [Apollo](https://www.apollographql.com/docs/apollo-server/)
+* [GraphQL](https://graphql.org/)
 
-[![npm version](https://badge.fury.io/js/graphql.svg)](https://badge.fury.io/js/graphql)
-[![Build Status](https://travis-ci.org/graphql/graphql-js.svg?branch=master)](https://travis-ci.org/graphql/graphql-js?branch=master)
-[![Coverage Status](https://codecov.io/gh/graphql/graphql-js/branch/master/graph/badge.svg)](https://codecov.io/gh/graphql/graphql-js)
+## Course
+This course has two parts, slides and excercises. The slides describe the excerices in detail. Each excercise has a starting branch and solution branch. Example `lesson-1` and `lesson-1-solution`.
+## Excercises
+### Hello world GraphQL server with Apollo Server
+* branch - `lesson-1`
 
-See more complete documentation at https://graphql.org/ and
-https://graphql.org/graphql-js/.
+In this lesson you'll be creating a simple GraphQL server using Apollo Server. 
+- [ ] install dependencies with yarn (prefered for version locking) or npm
+- [ ] create a schema with at least one Type
+- [ ] create a query from that Type
+- [ ] create a mutation for that Type
+- [ ] create mock resolvers for query and mutation
+- [ ] start the server
+- [ ] using GraphQL playground, perform query and mutation
 
-Looking for help? Find resources [from the community](https://graphql.org/community/).
+### Creating Schema with SDL
+* branch - `lesson-2`
+* test command - `yarn test-schema` or `npm run test-schema`
 
+This exercise will have you creating a GraphQL Schema based on the the mongoose models already created
+- [ ] create Type for product
+- [ ] create inputs for product
+- [ ] create queries for product
+- [ ] create mutations for product
+- [ ] ensure all tests pass by running test command
 
-## Getting Started
+### Resolving Queries and Mutations
+* branch - `lesson-3`
+* test command - `yarn test-resolvers` or `npm run test-resolvers`
 
-An overview of GraphQL in general is available in the
-[README](https://github.com/graphql/graphql-spec/blob/master/README.md) for the
-[Specification for GraphQL](https://github.com/graphql/graphql-spec). That overview
-describes a simple set of GraphQL examples that exist as [tests](src/__tests__)
-in this repository. A good way to get started with this repository is to walk
-through that README and the corresponding tests in parallel.
+In this exercise, you'll be creating resolvers for the Queries and Mutations on the product type. You'll be using Mongoose models to perform CRUD in your resolvers.
 
-### Using GraphQL.js
+- [ ] create resolvers for product queries
+- [ ] create resolvers for product mutations
+- [ ] create resolvers for prouduct createdBy field
+- [ ] ensure all tests pass by running test command
 
-Install GraphQL.js from npm
+### Interfaces and Unions
+* branch - `lesson-4`
+* test command - `yarn test-interfaces` or `npm run test-interfaces`
 
-With yarn:
+Now that you know about schemas and resolvers, we need to make some changes. Our product model in mongoose is split between 3 different product types. We need to make the product type an interface and then create types for each possible type in our mongoose model. Don't forget to create  resolver to resolve the type.
 
-```sh
-yarn add graphql
-```
+- [ ] change product type to an interface
+- [ ] create Bike type that implements product
+- [ ] create GamingPc type that implements product
+- [ ] create Drone type that implements product
+- [ ] create resolver for product interface that resolves the type
+- [ ] ensure all tests pass by running test command
 
-or alternatively using npm:
+### Authentication
+* branch - `lesson-5`
+* test command - `yarn test-auth` or `npm run test-auth`
 
-```sh
-npm install --save graphql
-```
+There are many many ways to authenticate with GraphQL. Our API is a public API, so we'll use API keys. Some queries need authentication, and some queries also need the correct role. Authenticate the request and update the product resolvers!
 
-GraphQL.js provides two important capabilities: building a type schema, and
-serving queries against that type schema.
+- [ ] authenticate the request and add use to context
+- [ ] block all product queries and mutations if no user
+- [ ] block all product mutations if not an admin role
+- [ ] ensure all tests pass by running test command
 
-First, build a GraphQL type schema which maps to your code base.
-
-```js
-import {
-  graphql,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString
-} from 'graphql';
-
-var schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'RootQueryType',
-    fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return 'world';
-        }
-      }
-    }
-  })
-});
-```
-
-This defines a simple schema with one type and one field, that resolves
-to a fixed value. The `resolve` function can return a value, a promise,
-or an array of promises. A more complex example is included in the top
-level [tests](src/__tests__) directory.
-
-Then, serve the result of a query against that type schema.
-
-```js
-var query = '{ hello }';
-
-graphql(schema, query).then(result => {
-
-  // Prints
-  // {
-  //   data: { hello: "world" }
-  // }
-  console.log(result);
-
-});
-```
-
-This runs a query fetching the one field defined. The `graphql` function will
-first ensure the query is syntactically and semantically valid before executing
-it, reporting errors otherwise.
-
-```js
-var query = '{ boyhowdy }';
-
-graphql(schema, query).then(result => {
-
-  // Prints
-  // {
-  //   errors: [
-  //     { message: 'Cannot query field boyhowdy on RootQueryType',
-  //       locations: [ { line: 1, column: 3 } ] }
-  //   ]
-  // }
-  console.log(result);
-
-});
-```
-
-### Want to ride the bleeding edge?
-
-The `npm` branch in this repository is automatically maintained to be the last
-commit to `master` to pass all tests, in the same form found on npm. It is
-recommended to use builds deployed to npm for many reasons, but if you want to use
-the latest not-yet-released version of graphql-js, you can do so by depending
-directly on this branch:
-
-```
-npm install graphql@git://github.com/graphql/graphql-js.git#npm
-```
-
-### Using in a Browser
-
-GraphQL.js is a general purpose library and can be used both in a Node server
-and in the browser. As an example, the [GraphiQL](https://github.com/graphql/graphiql/)
-tool is built with GraphQL.js!
-
-Building a project using GraphQL.js with [webpack](https://webpack.js.org) or
-[rollup](https://github.com/rollup/rollup) should just work and only include
-the portions of the library you use. This works because GraphQL.js is distributed
-with both CommonJS (`require()`) and ESModule (`import`) files. Ensure that any
-custom build configurations look for `.mjs` files!
-
-####GraphQL is a syntax that describes how to ask for data, and is generally used to load data from a server to a client. GraphQL has three main characteristics:
-
-It lets the client specify exactly what data it needs.
-It makes it easier to aggregate data from multiple sources.
-It uses a type system to describe data.
-With GraphQL, the user is able to make a single call to fetch the required information rather than to construct several REST requests to fetch the same.
-
-## Screenshots
-
-### WHAT IS GRAPHQL
-
-![What is graphql?](./Screenshots/graphql-1.png?raw=true "Optional Title")
-
-### REST VS GRAPHQL
-
-![rest vs graphql](./Screenshots/graphql-vs-rest.png?raw=true "Optional Title")
+### Testing
+The other types don't have any test, go ahead and write some!
