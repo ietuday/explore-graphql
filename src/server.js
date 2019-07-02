@@ -1,5 +1,5 @@
-import { ApolloServer } from 'apollo-server';
-import { loadTypeSchema } from './utils/schema';
+import { ApolloServer } from 'apollo-server'
+import { loadTypeSchema } from './utils/schema'
 import { merge } from 'lodash';
 import config from './config';
 import { connect } from './db';
@@ -11,33 +11,37 @@ const types = ['product', 'coupon', 'user'];
 
 export const start = async () => {
   const rootSchema = `
-   type Cat{
-     name: String
-     age: Int!
-   }
-
-   type Query{
-     myCat: Cat
-   }
-
+    type Cat {
+      species: String!
+      fluffy: Boolean!
+      nice: Boolean!
+      age: Int!
+    }
+    type Query {
+      cat: Cat
+      cats: [Cat]!
+    }
     schema {
       query: Query
     }
   `;
-  const schemaTypes = await Promise.all(types.map(loadTypeSchema));
-
+  const schemaTypes = await Promise.all(types.map(loadTypeSchema))
+  const catResolver = {
+    Query: {
+      cat() {
+        return { species: 'mainecoon', fluffy: true, nice: true, age: 1 }
+      },
+      cats() {
+        return [
+          { species: 'mainecoon', fluffy: true, nice: true, age: 1 },
+          { species: 'grey', fluffy: false, nice: false, age: 3 }
+        ];
+      }
+    }
+  }
   const server = new ApolloServer({
     typeDefs: [rootSchema],
-    resolvers: {
-      Query: {
-        myCat(){
-         return { 
-           name:'Garfield',
-          age: 17
-          };
-        }
-      }
-    },
+    resolvers: catResolver,
     context({ req }) {
       // use the authenticate function from utils to auth req, its Async!
       return { user: null };
