@@ -42,8 +42,10 @@ export const start = async () => {
     resolvers: {
       Query: {
         cat(_, args, context, info){
+          console.log("Inside Cat Query");
+          
           console.log('cat resolver');
-          return {}
+          return {};
         },
         owner(_, args, context, info){
           console.log('owner resolver');
@@ -52,15 +54,26 @@ export const start = async () => {
       },
       Cat: {
           name(){
+            console.log("Inside Cat Name");
             return 'Daryl';
           },
           age(){
+            console.log("Inside Cat Age");
             return 2;
+          },
+          owner(){
+            console.log("Inside Cat Owner");
+            return {};  
           }
       },
       Owner: {
         name(){
+          console.log("Inside Owner name");
           return 'Scott';
+        },
+        cat(){
+          console.log("Inside Owner cat");
+          return {};  
         }
       }
     },
