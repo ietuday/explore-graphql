@@ -42,8 +42,7 @@ export const start = async () => {
     resolvers: {
       Query: {
         cat(_, args, context, info){
-          console.log("Inside Cat Query");
-          
+          console.log("Inside Cat Query", info); 
           console.log('cat resolver');
           return {};
         },
