@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import validator from 'validator'
+import mongoose from 'mongoose';
+import validator from 'validator';
 
 export const productSchema = new mongoose.Schema(
   {
@@ -51,6 +51,6 @@ export const productSchema = new mongoose.Schema(
     }
   },
   { timestamps: true }
-)
+);
 
-export const Product = mongoose.model('product', productSchema)
+export const Product = mongoose.model('product', productSchema);
