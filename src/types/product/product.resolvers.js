@@ -1,7 +1,7 @@
-import { Product } from './product.model'
-import { User, roles } from '../user/user.model'
-import { AuthenticationError } from 'apollo-server'
-import mongoose from 'mongoose'
+import { Product } from './product.model';
+import { User, roles } from '../user/user.model';
+import { AuthenticationError } from 'apollo-server';
+import mongoose from 'mongoose';
 
 const productsTypeMatcher = {
   GAMING_PC: 'GamingPc',
@@ -15,4 +15,4 @@ export default {
   Product: {
     __resolveType(product) {}
   }
-}
+};

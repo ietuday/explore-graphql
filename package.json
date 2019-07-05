@@ -10,8 +10,8 @@
     "test-resolvers": "npm test -- -t lesson-3",
     "test-interfaces": "cross-env npm test -- -t lesson-4",
     "test-auth": "npm test -- -t lesson-5",
-    "dev": "nodemon --exec yarn restart",
-    "restart": "rimraf dist && yarn build && yarn start",
+    "dev": "nodemon --exec npm run restart",
+    "restart": "rimraf dist && npm run build && npm run start",
     "start": "node dist/index.js"
   },
   "devDependencies": {
